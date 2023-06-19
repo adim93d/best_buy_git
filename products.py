@@ -6,6 +6,8 @@ class Product:
         self.active = active
 
     def is_active(self) -> bool:
+        if self.quantity == 0:
+            self.active = False
         return self.active
 
     def deactivate(self):
@@ -42,4 +44,5 @@ class Product:
             purchase_price = quantity * self.price
             self.quantity = self.quantity - quantity
             return f"Total item price: ${purchase_price}"
+
 

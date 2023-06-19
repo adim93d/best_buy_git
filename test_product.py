@@ -35,17 +35,22 @@ def test_create_invalid_product():
     assert type(invalid_product.name) != str or invalid_product.price < 0
 
 
-
 def test_no_inventory():
-    pass
+    xiaomi = products.Product(name="Xiaomi Poco X3 NFC", price=230, quantity=137, active=True)
+    xiaomi.buy(137)
+    assert xiaomi.is_active() == False
 
 
 def test_modified_quantity():
-    pass
+    xiaomi = products.Product(name="Xiaomi Poco X3 NFC", price=230, quantity=137, active=True)
+    xiaomi.buy(105)
+    assert xiaomi.quantity == 32
 
 
 def test_larger_than_quantity_exception():
-    pass
+    xiaomi = products.Product(name="Xiaomi Poco X3 NFC", price=230, quantity=137, active=True)
+    assert xiaomi.buy(170)
+    assert xiaomi.quantity == 137
 
 
 pytest.main()
