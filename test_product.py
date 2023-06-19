@@ -10,12 +10,30 @@ Test that buying a larger quantity than exists invokes exception.
 """
 
 
-def test_create_product():
-    pass
+def test_create_product_name():
+    xiaomi = products.Product(name="Xiaomi Poco X3 NFC", price=230, quantity=137, active=True)
+    assert type(xiaomi.name) == str
+
+
+def test_create_product_price():
+    xiaomi = products.Product(name="Xiaomi Poco X3 NFC", price=230, quantity=137, active=True)
+    assert xiaomi.price >= 1
+
+
+def test_create_product_quantity():
+    xiaomi = products.Product(name="Xiaomi Poco X3 NFC", price=230, quantity=137, active=True)
+    assert xiaomi.quantity >= 0
+
+
+def test_create_product_active():
+    xiaomi = products.Product(name="Xiaomi Poco X3 NFC", price=230, quantity=137, active=True)
+    assert type(xiaomi.active) == bool
 
 
 def test_create_invalid_product():
-    pass
+    invalid_product = products.Product(name=1, price=-200,quantity=0, active=True)
+    assert type(invalid_product.name) != str or invalid_product.price < 0
+
 
 
 def test_no_inventory():
@@ -28,3 +46,6 @@ def test_modified_quantity():
 
 def test_larger_than_quantity_exception():
     pass
+
+
+pytest.main()
