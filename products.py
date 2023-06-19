@@ -37,12 +37,38 @@ class Product:
             self.activate()
         return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Active: {self.active}"
 
-    def buy(self, quantity) -> float:
+    def buy(self, quantity) -> str:
         if quantity > self.quantity:
             return f"insufficient item quantity, Only {self.quantity} units available."
         else:
             purchase_price = quantity * self.price
             self.quantity = self.quantity - quantity
             return f"Total item price: ${purchase_price}"
+
+
+class NonStockedProducts(Product):
+    def __init__(self):
+        super().__init__()
+        self.quantity = "Unlimited"
+
+    def is_active(self):
+        return self.active
+
+    def get_quantity(self) -> str:
+        return self.quantity
+
+    def show(self) -> str:
+        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Active: {self.active}"
+
+    def buy(self, quantity):
+        purchase_price = quantity * self.price
+        return f"Total item price: ${purchase_price}"
+
+
+class LimitedProducts(Product):
+    # def __init__(self):
+    #     super().__init__()
+    #     pass
+    pass
 
 
