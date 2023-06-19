@@ -99,7 +99,8 @@ def shopping_cart(shop):
 def main():
     product_list = [products.Product(name="MacBook Air M2", price=1450, quantity=100, active=True),
                     products.Product(name="Bose QuietComfort Earbuds", price=250, quantity=500, active=True),
-                    products.Product(name="Google Pixel 7", price=500, quantity=250, active=True)
+                    products.Product(name="Google Pixel 7", price=500, quantity=250, active=True),
+                    products.LimitedProducts(name="Shipping", price=10, quantity=1, active=True, order_limit=1)
                     ]
 
     best_buy = stores.Store(product_list)

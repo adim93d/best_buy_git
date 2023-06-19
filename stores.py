@@ -1,3 +1,4 @@
+import products
 
 
 class Store:
@@ -25,6 +26,7 @@ class Store:
                 active_products.append(item.name)
                 print(f"{item_index}. {item.name}, Price: ${item.price}, Quantity: {item.quantity}")
                 item_index += 1
+
         print()
         return active_products
 

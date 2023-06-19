@@ -47,14 +47,16 @@ class Product:
 
 
 class NonStockedProducts(Product):
-    def __init__(self):
-        super().__init__()
-        self.quantity = "Unlimited"
+    def __init__(self, name: str, price: float, quantity: int, active: bool):
+        super().__init__(name, price, active, quantity)
+        self.name = name
+        self.price = price
+        self.active = active
 
     def is_active(self):
         return self.active
 
-    def get_quantity(self) -> str:
+    def get_quantity(self) -> int:
         return self.quantity
 
     def show(self) -> str:
@@ -66,9 +68,28 @@ class NonStockedProducts(Product):
 
 
 class LimitedProducts(Product):
-    # def __init__(self):
-    #     super().__init__()
-    #     pass
-    pass
+    def __init__(self, name: str, price: float, quantity: int, active: bool, order_limit: int):
+        super().__init__(name, price, quantity, active)
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+        self.active = active
+        self.order_limit = order_limit
+
+    def show(self) -> str:
+        if self.quantity <= 0:
+            self.deactivate()
+        else:
+            self.activate()
+        return f"{self.name}, Price: {self.price}, Limited to {self.order_limit} per order, Active: {self.active}"
+
+    def buy(self, quantity) -> str:
+        if quantity > self.order_limit:
+            return f"Only {self.order_limit} units per order."
+        else:
+            purchase_price = quantity * self.price
+            self.quantity = self.quantity - quantity
+            return f"Total item price: ${purchase_price}"
+
 
 
