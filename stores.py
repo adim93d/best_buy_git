@@ -23,8 +23,14 @@ class Store:
         print()
         for item in self.product_list:
             if item.active:
+                if item in products.Product:
+                    products.Product.show(item)
+                elif item in products.LimitedProducts:
+                    products.LimitedProducts.show(item)
+                elif item in products.NonStockedProducts:
+                    products.NonStockedProducts.show(item)
                 active_products.append(item.name)
-                print(f"{item_index}. {item.name}, Price: ${item.price}, Quantity: {item.quantity}")
+                # print(f"{item_index}. {item.name}, Price: ${item.price}, Quantity: {item.quantity}")
                 item_index += 1
 
         print()
@@ -36,3 +42,12 @@ class Store:
             total_order_price += item[1] * item[0].price
         print(f"Total shopping cart price: ${total_order_price}")
         return total_order_price
+
+    def showing(self):
+        for item in self.product_list:
+            if item in products.Product:
+                products.Product.show(item)
+            elif item in products.LimitedProducts:
+                products.LimitedProducts.show(item)
+            elif item in products.NonStockedProducts:
+                products.NonStockedProducts.show(item)

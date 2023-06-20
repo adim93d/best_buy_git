@@ -91,5 +91,3 @@ class LimitedProducts(Product):
             self.quantity = self.quantity - quantity
             return f"Total item price: ${purchase_price}"
 
-
-
