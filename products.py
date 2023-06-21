@@ -1,9 +1,10 @@
 class Product:
-    def __init__(self, name: str, price: float, quantity: int, active: bool):
+    def __init__(self, name: str, price: float, quantity: int, active: bool, limited: bool):
         self.name = name
         self.price = price
         self.quantity = quantity
         self.active = active
+        self.limited = limited
 
     def is_active(self) -> bool:
         if self.quantity == 0:
@@ -37,7 +38,7 @@ class Product:
             self.activate()
         return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Active: {self.active}"
 
-    def buy(self, quantity) -> str:
+    def buy(self, quantity):
         if quantity > self.quantity:
             return f"insufficient item quantity, Only {self.quantity} units available."
         else:
@@ -68,13 +69,14 @@ class NonStockedProducts(Product):
 
 
 class LimitedProducts(Product):
-    def __init__(self, name: str, price: float, quantity: int, active: bool, order_limit: int):
-        super().__init__(name, price, quantity, active)
+    def __init__(self, name: str, price: float, quantity: int, active: bool, order_limit: int, limited: bool):
+        super().__init__(name, price, quantity, active, limited)
         self.name = name
         self.price = price
         self.quantity = quantity
         self.active = active
         self.order_limit = order_limit
+        self.limited = limited
 
     def show(self) -> str:
         if self.quantity <= 0:
