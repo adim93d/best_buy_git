@@ -1,10 +1,9 @@
 class Product:
-    def __init__(self, name: str, price: float, quantity: int, active: bool, limited: bool):
+    def __init__(self, name: str, price: float, quantity: int, active: bool):
         self.name = name
         self.price = price
         self.quantity = quantity
         self.active = active
-        self.limited = limited
 
     def is_active(self) -> bool:
         if self.quantity == 0:
@@ -48,16 +47,17 @@ class Product:
 
 
 class NonStockedProducts(Product):
-    def __init__(self, name: str, price: float, quantity: int, active: bool):
-        super().__init__(name, price, active, quantity)
+    def __init__(self, name: str, price: float, quantity: str, active: bool):
+        super().__init__(name, price, quantity, active)
         self.name = name
         self.price = price
+        self.quantity = "Unlimited"
         self.active = active
 
     def is_active(self):
         return self.active
 
-    def get_quantity(self) -> int:
+    def get_quantity(self) -> str:
         return self.quantity
 
     def show(self) -> str:
@@ -69,14 +69,13 @@ class NonStockedProducts(Product):
 
 
 class LimitedProducts(Product):
-    def __init__(self, name: str, price: float, quantity: int, active: bool, order_limit: int, limited: bool):
-        super().__init__(name, price, quantity, active, limited)
+    def __init__(self, name: str, price: float, quantity: int, active: bool, order_limit: int):
+        super().__init__(name, price, quantity, active)
         self.name = name
         self.price = price
         self.quantity = quantity
         self.active = active
         self.order_limit = order_limit
-        self.limited = limited
 
     def show(self) -> str:
         if self.quantity <= 0:

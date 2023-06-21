@@ -21,7 +21,7 @@ def user_menu_input():
     return user_input
 
 
-def start(shop):
+def start(shop, product):
     menu()
     try:
         user_input = user_menu_input()
@@ -41,7 +41,7 @@ def start(shop):
             user_input = user_menu_input()
 
         elif user_input == 3:
-            shopping_cart(shop)
+            shopping_cart(shop, product)
             menu()
             user_input = user_menu_input()
 
@@ -50,7 +50,7 @@ def start(shop):
             quit()
 
 
-def shopping_cart(shop):
+def shopping_cart(shop, product):
     basket = []
     all_products = shop.get_all_products
     buy = products.Product.buy
@@ -78,7 +78,7 @@ def shopping_cart(shop):
             user_order_index = int(input("Which product # do you want? "))
             user_order_quantity = int(input("What amount do you want? "))
             item = (shop.product_list[user_order_index - 1], user_order_quantity)
-        print(buy(item[0], item[1]))
+            print(item[0].buy(user_order_quantity))
         basket.append(item)
         stores.Store.order(shop, basket)
 
@@ -98,13 +98,37 @@ def shopping_cart(shop):
 
 
 def main():
-    product_list = [products.Product(name="MacBook Air M2", price=1450, quantity=100, active=True, limited=False),
-                    products.Product(name="Bose QuietComfort Earbuds", price=250, quantity=500, active=True, limited=False),
-                    products.Product(name="Google Pixel 7", price=500, quantity=250, active=True, limited=False),
-                    products.LimitedProducts(name="Shipping", price=10, quantity=1, active=True, order_limit=1, limited=True)
+    product_list = [
+        products.Product(
+            name="MacBook Air M2",
+            price=1450,
+            quantity=100,
+            active=True),
+        products.Product(
+            name="Bose QuietComfort Earbuds",
+            price=250,
+            quantity=500,
+            active=True),
+        products.Product(
+            name="Google Pixel 7",
+            price=500,
+            quantity=250,
+            active=True),
+        products.NonStockedProducts(
+            name="Windows 10 Professional",
+            price=350,
+            active=True,
+            quantity="Unlimited",
+            ),
+        products.LimitedProducts(
+            name="Shipping",
+            price=10,
+            quantity=1,
+            active=True,
+            order_limit=1)
                     ]
     best_buy = stores.Store(product_list)
-    start(best_buy)
+    start(best_buy, product_list)
 
 
 if __name__ == '__main__':
