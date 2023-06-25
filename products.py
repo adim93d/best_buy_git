@@ -42,7 +42,7 @@ class Product:
                f"Price: {self.price}, " \
                f"Quantity: {self.quantity}, " \
                f"Active: {self.active}, " \
-               f"Promotion: {Promotions.get_promotion()}"
+               # f"Promotion: {Promotions.get_promotion(self)}"
 
     def buy(self, quantity):
         if quantity > self.quantity:
@@ -72,7 +72,7 @@ class NonStockedProducts(Product):
                f"Price: {self.price}, " \
                f"Quantity: {self.quantity}, " \
                f"Active: {self.active}, " \
-               f"Promotion: {Promotions.get_promotion()}"
+               # f"Promotion: {Promotions.get_promotion()}"
 
     def buy(self, quantity):
         purchase_price = quantity * self.price
@@ -97,7 +97,7 @@ class LimitedProducts(Product):
                f"Price: {self.price}, " \
                f"Limited to {self.order_limit} per order, " \
                f"Active: {self.active}, " \
-               f"Promotion: {Promotions.get_promotion()}"
+               # f"Promotion: {Promotions.get_promotion()}"
 
     def buy(self, quantity) -> str:
         if quantity > self.order_limit:

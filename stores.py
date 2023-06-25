@@ -13,7 +13,10 @@ class Store:
     def get_total_quantity(self) -> int:
         total_quantity = 0
         for item in self.product_list:
-            total_quantity += item.quantity
+            if item.quantity == 'Unlimited':
+                continue
+            else:
+                total_quantity += item.quantity
         return total_quantity
 
     def get_all_products(self) -> []:
