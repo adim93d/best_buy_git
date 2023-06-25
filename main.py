@@ -127,6 +127,12 @@ def main():
             active=True,
             order_limit=1)
                     ]
+    second_half_price = products.SecondHalfPrice("Second Half price!")
+    third_one_free = products.ThirdOneFree("Third One Free!")
+    thirty_percent = products.PercentDiscount("30% off!", percent=30)
+    product_list[0].set_promo(second_half_price)
+    product_list[1].set_promo(third_one_free)
+    product_list[3].set_promo(thirty_percent)
     best_buy = stores.Store(product_list)
     start(best_buy, product_list)
 

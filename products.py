@@ -1,3 +1,6 @@
+from abc import ABC, abstractmethod
+
+
 class Product:
     def __init__(self, name: str, price: float, quantity: int, active: bool):
         self.name = name
@@ -35,7 +38,11 @@ class Product:
             self.deactivate()
         else:
             self.activate()
-        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Active: {self.active}"
+        return f"{self.name}, " \
+               f"Price: {self.price}, " \
+               f"Quantity: {self.quantity}, " \
+               f"Active: {self.active}, " \
+               f"Promotion: {Promotions.get_promotion()}"
 
     def buy(self, quantity):
         if quantity > self.quantity:
@@ -61,7 +68,11 @@ class NonStockedProducts(Product):
         return self.quantity
 
     def show(self) -> str:
-        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Active: {self.active}"
+        return f"{self.name}, " \
+               f"Price: {self.price}, " \
+               f"Quantity: {self.quantity}, " \
+               f"Active: {self.active}, " \
+               f"Promotion: {Promotions.get_promotion()}"
 
     def buy(self, quantity):
         purchase_price = quantity * self.price
@@ -82,7 +93,11 @@ class LimitedProducts(Product):
             self.deactivate()
         else:
             self.activate()
-        return f"{self.name}, Price: {self.price}, Limited to {self.order_limit} per order, Active: {self.active}"
+        return f"{self.name}, " \
+               f"Price: {self.price}, " \
+               f"Limited to {self.order_limit} per order, " \
+               f"Active: {self.active}, " \
+               f"Promotion: {Promotions.get_promotion()}"
 
     def buy(self, quantity) -> str:
         if quantity > self.order_limit:
@@ -91,4 +106,52 @@ class LimitedProducts(Product):
             purchase_price = quantity * self.price
             self.quantity = self.quantity - quantity
             return f"Total item price: ${purchase_price}"
+
+
+class Promotions(ABC):
+    def __init__(self, promo):
+        self._promo = promo
+
+    def get_promotion(self):
+        return self._promo
+
+    def set_promotion(self, promo):
+        self._promo = promo
+
+
+class SecondHalfPrice(Promotions):
+    @abstractmethod
+    def apply_promotion(self, product, quantity) -> float:
+        if quantity < 2:
+            return product * quantity  # No discount if only buying one item
+        else:
+            discount = product / 2  # Half price discount for second item onwards
+            total_price = product + discount * (quantity - 1)  # Apply discount to all but the first item
+            return total_price
+
+
+class ThirdOneFree(Promotions):
+    @abstractmethod
+    def apply_promotion(self, product, quantity) -> float:
+        if quantity < 3:
+            return product * quantity  # no discount applied
+        else:
+            free_items = quantity // 3  # calculate number of free items
+            total_items = quantity - free_items  # calculate total number of items after discount
+            total_cost = product * total_items  # calculate total cost after discount
+            return total_cost
+
+
+class PercentDiscount(Promotions):
+    @abstractmethod
+    def apply_promotion(self, product, quantity, discount_percent) -> float:
+        price = product
+        total = price * quantity
+        discount = total * (discount_percent / 100)
+        return total - discount
+
+
+
+
+
 
